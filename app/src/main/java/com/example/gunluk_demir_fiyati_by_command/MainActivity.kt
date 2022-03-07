@@ -19,13 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //MainViewModel
-        mainViewModel = defaultViewModelProviderFactory.create(MainViewModel::class.java)
 
         //For Insets library
         WindowCompat.setDecorFitsSystemWindows(window, false)

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.gunluk_demir_fiyati_by_command.presentation.navigation.BottomNavItem
 import com.example.gunluk_demir_fiyati_by_command.ui.theme.MainScreen
 
 @Composable

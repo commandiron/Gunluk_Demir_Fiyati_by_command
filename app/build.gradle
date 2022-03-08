@@ -121,4 +121,7 @@ dependencies {
 
     //Swipe Reflesh
     implementation "com.google.accompanist:accompanist-swiperefresh:0.24.3-alpha"
+
+    //Jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
 }

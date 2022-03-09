@@ -8,11 +8,6 @@ Native Android simple steel rebar price tracker application written in Kotlin us
 |------|
 |<img src="https://user-images.githubusercontent.com/50905347/157480327-6a185ac4-4bbf-488a-8849-854c4ac830bc.png" width="250" height="500">|
 
-
-|Firebase - Data Structure|App Package Structure|
-|-------------------------|---------------------|
-|<img src="https://user-images.githubusercontent.com/50905347/156565001-46ee1ac2-f231-47aa-b802-b49a1abed092.png" width="250" height="125">|<img src="https://user-images.githubusercontent.com/50905347/156565459-d8ab03a3-1248-4240-b093-231cff3a24fd.png" width="250" height="125">|
-
 * Application - Features ☕
    * User Status (ONLINE - OFFLINE)
    * Message Status (RECEIVED - READ) - PENDING: After push notification.
@@ -23,6 +18,7 @@ Native Android simple steel rebar price tracker application written in Kotlin us
    * UserList Swipe Reflesh
    * Push Notification
    * Dark Theme
+   * Language - Turkish
 
 * Tech-stack ⚛️
     * [Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operation

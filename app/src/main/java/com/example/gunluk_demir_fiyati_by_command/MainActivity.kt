@@ -3,18 +3,13 @@ package com.example.gunluk_demir_fiyati_by_command
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,8 +47,9 @@ fun MainScreenView() {
 
     val snackbarHostState = remember {SnackbarHostState()}
     val scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
-
     val navController = rememberNavController()
+
+    var isFabClicked by remember { mutableStateOf(false)}
 
     Scaffold(
         modifier = Modifier.padding(rememberInsetsPaddingValues(
@@ -64,7 +60,9 @@ fun MainScreenView() {
         scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = {
+                    isFabClicked = !isFabClicked
+                },
                 backgroundColor = Color(0xffFFA000)
             ) {
                 Icon(
@@ -79,7 +77,7 @@ fun MainScreenView() {
         bottomBar = {CustomBottomAppBar()}
 
     ) {
-        NavigationGraph(navController)
+        NavigationGraph(navController, isFabClicked)
     }
 
 }

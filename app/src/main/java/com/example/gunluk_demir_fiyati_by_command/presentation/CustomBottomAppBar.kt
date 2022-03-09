@@ -22,22 +22,22 @@ fun CustomBottomAppBar() {
     ) {
 
         // Leading icons should typically have a high content alpha
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-            IconButton(
-                onClick = { }) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = null)
-            }
-
-        }
+//        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
+//            IconButton(
+//                onClick = { }) {
+//                Icon(Icons.Filled.ArrowBack, contentDescription = null)
+//            }
+//
+//        }
         // The actions should be at the end of the BottomAppBar. They use the default medium
         // content alpha provided by BottomAppBar
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = { }) {
-            Icon(Icons.Filled.Search, contentDescription = null)
-        }
-
-        IconButton(onClick = { }) {
-            Icon(Icons.Filled.MoreVert, contentDescription = null)
-        }
+//        Spacer(modifier = Modifier.weight(1f))
+//        IconButton(onClick = { }) {
+//            Icon(Icons.Filled.Search, contentDescription = null)
+//        }
+//
+//        IconButton(onClick = { }) {
+//            Icon(Icons.Filled.MoreVert, contentDescription = null)
+//        }
     }
 }

@@ -10,13 +10,15 @@ import com.example.gunluk_demir_fiyati_by_command.ui.theme.MainScreen
 
 @Composable
 fun NavigationGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    isFabClicked: Boolean
 ) {
     NavHost(navController, startDestination = BottomNavItem.Main.fullRoute) {
         //MAIN SCREEN
         composable(BottomNavItem.Main.fullRoute) {
             MainScreen(
-                navController = navController
+                navController = navController,
+                isFabClicked = isFabClicked
             )
         }
     }

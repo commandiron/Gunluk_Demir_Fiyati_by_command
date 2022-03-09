@@ -42,20 +42,45 @@ import com.example.gunluk_demir_fiyati_by_command.MainScreenView
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
 import com.example.gunluk_demir_fiyati_by_command.presentation.MainViewModel
 import com.example.gunluk_demir_fiyati_by_command.R
+import com.example.gunluk_demir_fiyati_by_command.presentation.CustomAlertDialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.random.Random
 
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
-    navController: NavHostController) {
+    navController: NavHostController,
+    isFabClicked: Boolean) {
 
-    val demirFiyatList = mainViewModel.demirFiyatList.value
+    val demirFiyatListFromDb = mainViewModel.demirFiyatListFromDb.value
+    val demirFiyatListFromJsoup = mainViewModel.demirFiyatListFromJsoup.value
     val isRefreshing by remember { mainViewModel.isRefreshing }
+
+    //Alert Dialog For CheckList
+    var showAlertDialog by remember { mutableStateOf(false) }
+    if (showAlertDialog) {
+        CustomAlertDialog(
+            demirFiyatListFromJsoup = demirFiyatListFromJsoup, //İlk geldiğinde db'den çekmiyor.///////////////////////////////////////////
+            onDismiss = {showAlertDialog = !showAlertDialog},
+            onConfirm = {
+                showAlertDialog = !showAlertDialog
+                mainViewModel.insertDataWithChackList(it)
+            })
+    }
+
+    var flag by remember { mutableStateOf(true) }
+    LaunchedEffect(key1 = isFabClicked){
+        if(flag){
+            flag = false
+        }else{
+            showAlertDialog = !showAlertDialog
+        }
+    }
     
     Column() {
         Surface(
@@ -72,7 +97,9 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
                     Icon(
-                        modifier = Modifier.padding(12.dp,0.dp,0.dp,0.dp).size(40.dp),
+                        modifier = Modifier
+                            .padding(12.dp, 0.dp, 0.dp, 0.dp)
+                            .size(40.dp),
                         imageVector = Icons.Default.PriceCheck,
                         contentDescription = null)
                     CustomText(
@@ -90,7 +117,8 @@ fun MainScreen(
 
         Box(
             modifier = Modifier
-                .fillMaxSize().padding(bottom = 56.dp),
+                .fillMaxSize()
+                .padding(bottom = 56.dp),
             contentAlignment = Alignment.Center,
         ) {
             if (isRefreshing) {
@@ -129,48 +157,50 @@ fun MainScreen(
                         )
 
                         Column(
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            CustomText(
-                                fontSize = 30.sp,
-                                text = demirFiyatList[1].bolge)
-                            Spacer(modifier = Modifier.width(5.dp))
-                            val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
-                            CustomText(
-                                fontSize = 10.sp,
-                                text = "$currentDate tarihli demir fiyatları (KDV DAHİL, NAKLİYE HARİÇ):")
-                            Spacer(modifier = Modifier.width(5.dp))
-                            CustomText(
-                                fontSize = 18.sp,
-                                text = "Φ8: ${demirFiyatList[1].fi8Fiyat}")
-                            Spacer(modifier = Modifier.width(5.dp))
-                            CustomText(
-                                fontSize = 18.sp,
-                                text = "Φ10: ${demirFiyatList[1].fi10Fiyat}")
-                            Spacer(modifier = Modifier.width(5.dp))
-                            CustomText(
-                                fontSize = 18.sp,
-                                text = "Φ12-32: ${demirFiyatList[1].fi1232Fiyat}")
+                            if(demirFiyatListFromDb.isNotEmpty()){
+                                CustomText(
+                                    fontSize = 30.sp,
+                                    text = demirFiyatListFromDb[0].bolge)
+                                Spacer(modifier = Modifier.width(5.dp))
+                                val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+                                CustomText(
+                                    fontSize = 10.sp,
+                                    text = "$currentDate tarihli demir fiyatları (KDV DAHİL, NAKLİYE HARİÇ):")
+                                Spacer(modifier = Modifier.width(5.dp))
+                                CustomText(
+                                    fontSize = 22.sp,
+                                    text = "Φ8: ${demirFiyatListFromDb[0].fi8Fiyat}")
+                                Spacer(modifier = Modifier.width(5.dp))
+                                CustomText(
+                                    fontSize = 22.sp,
+                                    text = "Φ10: ${demirFiyatListFromDb[0].fi10Fiyat}")
+                                Spacer(modifier = Modifier.width(5.dp))
+                                CustomText(
+                                    fontSize = 22.sp,
+                                    text = "Φ12-32: ${demirFiyatListFromDb[0].fi1232Fiyat}")
+                            }
                         }
 
                     }
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(8.dp).border(1.dp,Color.Red),
+                            .padding(8.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
+
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = null,
                             modifier = Modifier.clickable {
-                                mainViewModel.getData()
-                            })
+                                mainViewModel.getAllDataFromDb()
+                        })
                     }
                 }
             }
-
         }
     }
 }

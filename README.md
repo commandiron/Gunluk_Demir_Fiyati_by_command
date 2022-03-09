@@ -13,6 +13,7 @@ Native Android simple steel rebar price tracker application written in Kotlin us
 
 * Tech-stack ⚛️
     * [Kotlin](https://kotlinlang.org/) + [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operation
+    * [Jsoup](https://jsoup.org) - perform web scraping
     * [Flows](https://developer.android.com/kotlin/flow)
     * [Hilt](https://github.com/google/dagger) - DI
     * [Accompanist](https://github.com/google/accompanist)

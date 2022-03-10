@@ -1,10 +1,9 @@
 package com.example.gunluk_demir_fiyati_by_command.presentation
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
 import com.example.gunluk_demir_fiyati_by_command.domain.model.Response
 import com.example.gunluk_demir_fiyati_by_command.domain.use_case.UseCases
@@ -19,10 +18,13 @@ class MainViewModel@Inject constructor(
     private val useCases: UseCases
 ): ViewModel()  {
 
-    var demirFiyatListFromDb = mutableStateOf<List<DemirFiyat>>(listOf())
+    var maskedDemirFiyatList = mutableStateOf<List<DemirFiyat>>(listOf())
         private set
 
-    var demirFiyatListFromJsoup = mutableStateOf<MutableList<DemirFiyat>>(arrayListOf())
+    var demirFiyatList = mutableStateOf<List<DemirFiyat>>(listOf())
+        private set
+
+    var checkList = mutableStateOf<List<CityCheck>>(listOf())
         private set
 
     var isRefreshing = mutableStateOf(false)
@@ -30,7 +32,6 @@ class MainViewModel@Inject constructor(
 
     init {
         getDataFromJsoup()
-        getAllDataFromDb()
     }
 
     fun getDataFromJsoup(){
@@ -41,12 +42,12 @@ class MainViewModel@Inject constructor(
                         isRefreshing.value = true
                     }
                     is Response.Success -> {
+                        demirFiyatList.value = response.data
+                        getCheckListFromDb()
                         delay(500)
                         isRefreshing.value = false
-                        demirFiyatListFromJsoup.value = response.data.toMutableList()
                     }
                     is Response.Error -> {
-                        println("error" + response.message)
                         isRefreshing.value = false
                     }
                 }
@@ -54,31 +55,14 @@ class MainViewModel@Inject constructor(
         }
     }
 
-    fun insertDataWithChackList(demirFiyatListChecked: List<DemirFiyat>){
-
-        demirFiyatListFromJsoup.value = demirFiyatListChecked.toMutableList()
-
-        demirFiyatListChecked.forEach { demirFiyat ->
-            demirFiyatListChecked.forEach {  demirFiyatChecked ->
-                if(demirFiyatChecked.bolge == demirFiyat.bolge){
-                    if(demirFiyatChecked.userCheck != null){
-                        if(demirFiyatChecked.userCheck!!){
-                            insertDataToDb(demirFiyat)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun insertDataToDb(demirFiyat: DemirFiyat){
+    fun insertCheckListToDb(cityCheckList: List<CityCheck>){
         viewModelScope.launch {
-            useCases.insertDataToDb.invoke(demirFiyat).collect { response ->
+            useCases.insertCheckListToDb.invoke(cityCheckList).collect { response ->
                 when(response){
                     is Response.Loading -> {
                     }
                     is Response.Success -> {
-                        getAllDataFromDb()
+                        getCheckListFromDb()
                     }
                     is Response.Error -> {}
                 }
@@ -86,14 +70,23 @@ class MainViewModel@Inject constructor(
         }
     }
 
-    fun getAllDataFromDb(){
+    fun getCheckListFromDb(){
         viewModelScope.launch {
-            useCases.getAllDataFromDb.invoke().collect { response ->
+            useCases.getCheckListFromDb.invoke().collect { response ->
                 when(response){
                     is Response.Loading -> {
                     }
                     is Response.Success -> {
-                        demirFiyatListFromDb.value = response.data
+                        checkList.value = response.data
+                        maskedDemirFiyatList.value = listOf()
+                        checkList.value.forEach { check->
+                            if(check.isChecked){
+                                val checkedFiyat = demirFiyatList.value.find { it.id == check.id }
+                                if(checkedFiyat != null){
+                                    maskedDemirFiyatList.value = maskedDemirFiyatList.value + checkedFiyat
+                                }
+                            }
+                        }
                     }
                     is Response.Error -> {}
                 }

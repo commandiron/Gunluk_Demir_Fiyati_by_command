@@ -1,5 +1,8 @@
 package com.example.gunluk_demir_fiyati_by_command.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -13,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomBottomAppBar() {
-    BottomAppBar(
-        backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = MaterialTheme.colors.onSecondary,
-        elevation = 4.dp,
-        cutoutShape = CircleShape
-    ) {
+fun CustomBottomAppBar(bottomBarState: Boolean) {
+    AnimatedVisibility(visible = bottomBarState, exit = fadeOut(), enter = fadeIn()) {
+        BottomAppBar(
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary,
+            elevation = 4.dp,
+            cutoutShape = CircleShape
+        ) {
 
-        // Leading icons should typically have a high content alpha
+            // Leading icons should typically have a high content alpha
 //        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
 //            IconButton(
 //                onClick = { }) {
@@ -29,8 +33,8 @@ fun CustomBottomAppBar() {
 //            }
 //
 //        }
-        // The actions should be at the end of the BottomAppBar. They use the default medium
-        // content alpha provided by BottomAppBar
+            // The actions should be at the end of the BottomAppBar. They use the default medium
+            // content alpha provided by BottomAppBar
 //        Spacer(modifier = Modifier.weight(1f))
 //        IconButton(onClick = { }) {
 //            Icon(Icons.Filled.Search, contentDescription = null)
@@ -39,5 +43,6 @@ fun CustomBottomAppBar() {
 //        IconButton(onClick = { }) {
 //            Icon(Icons.Filled.MoreVert, contentDescription = null)
 //        }
+        }
     }
 }

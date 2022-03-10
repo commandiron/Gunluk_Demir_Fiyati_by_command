@@ -8,8 +8,8 @@ import com.example.gunluk_demir_fiyati_by_command.domain.use_case.UseCases
 import com.example.gunluk_demir_fiyati_by_command.data.repository.AppRepositoryImpl
 import com.example.gunluk_demir_fiyati_by_command.domain.service.db.AppDao
 import com.example.gunluk_demir_fiyati_by_command.domain.service.db.AppDatabase
-import com.example.gunluk_demir_fiyati_by_command.domain.use_case.GetAllDataFromDb
-import com.example.gunluk_demir_fiyati_by_command.domain.use_case.InsertDataToDb
+import com.example.gunluk_demir_fiyati_by_command.domain.use_case.GetCheckListFromDb
+import com.example.gunluk_demir_fiyati_by_command.domain.use_case.InsertCheckListToDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +42,7 @@ object AppModule {
     fun provideUseCases(repository: AppRepository) = UseCases(
         //Main Screen
         getData = GetData(repository),
-        insertDataToDb = InsertDataToDb(repository),
-        getAllDataFromDb = GetAllDataFromDb(repository)
+        insertCheckListToDb = InsertCheckListToDb(repository),
+        getCheckListFromDb = GetCheckListFromDb(repository)
     )
 }

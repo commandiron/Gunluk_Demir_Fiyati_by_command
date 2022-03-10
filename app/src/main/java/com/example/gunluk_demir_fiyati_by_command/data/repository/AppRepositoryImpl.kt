@@ -3,7 +3,9 @@ package com.example.gunluk_demir_fiyati_by_command.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.example.gunluk_demir_fiyati_by_command.core.CityPhotos
 import com.example.gunluk_demir_fiyati_by_command.core.Constants.DATA_URL
+import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
 import com.example.gunluk_demir_fiyati_by_command.domain.repository.AppRepository
 import com.example.gunluk_demir_fiyati_by_command.domain.model.Response
@@ -53,8 +55,7 @@ class AppRepositoryImpl @Inject constructor(
                                     dataChildren.select("td:nth-child(2)").text(),
                                     dataChildren.select("td:nth-child(3)").text(),
                                     dataChildren.select("td:nth-child(4)").text(),
-                                    null
-
+                                    CityPhotos.Get.cityUrlMap[dataChildren.select("th").text()].toString()
                                 )
                             demirFiyatList += demirFiyat
                             count++
@@ -75,13 +76,13 @@ class AppRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertDataToDb(demirFiyat: DemirFiyat): Flow<Response<Boolean>> = flow {
+    override suspend fun insertCheckListToDb(cityCheckList: List<CityCheck>): Flow<Response<Boolean>> = flow {
         appDao.deleteAll()
-        appDao.insert(demirFiyat)
+        appDao.insertAll(cityCheckList)
         emit(Response.Success(true))
     }
 
-    override suspend fun getAllDataFromDb(): Flow<Response<List<DemirFiyat>>> = flow {
+    override suspend fun getCheckListFromDb(): Flow<Response<List<CityCheck>>> = flow {
         emit(Response.Success(appDao.getAll()))
     }
 }

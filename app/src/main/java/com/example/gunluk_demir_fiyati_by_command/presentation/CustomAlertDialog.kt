@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -12,25 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
 
 
 @Composable
 fun CustomAlertDialog(
-    demirFiyatListFromJsoup: MutableList<DemirFiyat>,
+    inputDemirFiyatList: List<DemirFiyat>,
+    inputCheckList: List<CityCheck>,
     onDismiss: () -> Unit,
-    onConfirm: (List<DemirFiyat>) -> Unit = {}
+    onConfirm: (List<CityCheck>) -> Unit = {}
 ) {
 
-    val dialogText = "Add user via email".trimIndent()
-
-    val demirFiyatList by remember {mutableStateOf(demirFiyatListFromJsoup)}
-
-    var demirFiyatCheckList by remember {mutableStateOf<MutableList<DemirFiyat>>(mutableListOf())}
-
-    LaunchedEffect(key1 = Unit){
-        demirFiyatCheckList.addAll(demirFiyatList)
-    }
+    val demirFiyatList by remember {mutableStateOf(inputDemirFiyatList)}
+    var checkList by remember {mutableStateOf(inputCheckList)}
 
     androidx.compose.material.AlertDialog(
         onDismissRequest = onDismiss,
@@ -46,7 +43,7 @@ fun CustomAlertDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onConfirm(demirFiyatCheckList)
+                    onConfirm(checkList)
                 },
                 modifier = Modifier
                     .padding(8.dp)
@@ -59,16 +56,28 @@ fun CustomAlertDialog(
         },
         text = {
             Column() {
-                Text(text = dialogText)
+                Text(text = "dialogText")
+
                 demirFiyatList.forEach { demirFiyat ->
-                    var check by remember { mutableStateOf(demirFiyat.userCheck ?: false) }
+                    var check by remember { mutableStateOf( false) }
+                    if(checkList.isNotEmpty()){
+                        for(i in checkList){
+                            if(i.id == demirFiyat.id){
+                                check = i.isChecked
+                            }
+                        }
+                    }
                     Row() {
                         Checkbox(checked = check, onCheckedChange = {
                             check = !check
-                            println(demirFiyat.id.toString() + it)
-                            demirFiyatCheckList.removeAt(demirFiyat.id!! - 1)
-                            demirFiyatCheckList.add(DemirFiyat(demirFiyat.id,demirFiyat.bolge,demirFiyat.fi8Fiyat,demirFiyat.fi10Fiyat,demirFiyat.fi1232Fiyat,check))
-                            demirFiyatCheckList = demirFiyatCheckList.sortedBy{it.id}.toMutableList()
+
+                            if(checkList.contains(CityCheck(demirFiyat.id, demirFiyat.bolge, check)) || checkList.contains(CityCheck(demirFiyat.id, demirFiyat.bolge, !check))){
+                                checkList.find { it.id == demirFiyat.id }?.let {
+                                    it.isChecked = check
+                                }
+                            }else{
+                                checkList = checkList + CityCheck(demirFiyat.id, demirFiyat.bolge, check)
+                            }
                         })
                         Text(text = demirFiyat.bolge)
                     }

@@ -6,7 +6,7 @@ Native Android simple steel rebar price tracker application written in Kotlin us
 
 |Screen|
 |------|
-|![](https://user-images.githubusercontent.com/50905347/157681028-12cb9182-4639-406a-bd89-a92cbdb5321e.gif)|
+|<img src="https://user-images.githubusercontent.com/50905347/157681028-12cb9182-4639-406a-bd89-a92cbdb5321e.gif" width="258" height="571">|
 
 * Application - Features ☕
    * Language - Turkish

@@ -32,3 +32,4 @@ Native Android simple steel rebar price tracker application written in Kotlin us
    * Login via Google ❌
    * Swipe - Gestures ❌
    * Remember last page and card 	sorting ❌
+ 

@@ -1,4 +1,4 @@
-# Gunluk_Demir_Fiyati_by_command
+# SteelRebarPriceTrackerAppByCommand
 
 Native Android simple steel rebar price tracker application written in Kotlin using Jetpack Compose And Jsoup Library For Web Scrapping.
 

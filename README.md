@@ -1,4 +1,4 @@
-# SteelRebarPriceTrackerApp
+# SteelRebarPriceTrackerApp <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" width="80" height="20">
 
 Native Android simple steel rebar price tracker application written in Kotlin using Jetpack Compose And Jsoup Library For Web Scrapping.
 

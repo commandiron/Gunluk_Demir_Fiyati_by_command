@@ -1,8 +1,6 @@
 package com.example.gunluk_demir_fiyati_by_command.data.repository
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.example.gunluk_demir_fiyati_by_command.core.CityPhotos
 import com.example.gunluk_demir_fiyati_by_command.core.Constants.DATA_URL
 import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
@@ -12,7 +10,6 @@ import com.example.gunluk_demir_fiyati_by_command.domain.model.Response
 import com.example.gunluk_demir_fiyati_by_command.domain.service.db.AppDao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 import org.jsoup.Jsoup

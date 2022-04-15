@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -23,10 +24,12 @@ import com.example.gunluk_demir_fiyati_by_command.presentation.CustomBottomAppBa
 import com.example.gunluk_demir_fiyati_by_command.presentation.CustomFloatingActionButton
 import com.example.gunluk_demir_fiyati_by_command.presentation.navigation.BottomNavItem
 import com.example.gunluk_demir_fiyati_by_command.ui.theme.Gunluk_Demir_Fiyati_by_commandTheme
+import com.example.gunluk_demir_fiyati_by_command.ui.theme.onbackGround
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,6 +66,13 @@ fun MainScreenView() {
 
     var isFabClicked by remember { mutableStateOf(false)}
 
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setSystemBarsColor(
+        color = onbackGround,
+        darkIcons = false
+    )
+
     Scaffold(
         modifier = Modifier.padding(rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.systemBars,
@@ -81,7 +91,7 @@ fun MainScreenView() {
                 backgroundColor = Color(0xffFFA000)
             ) {
                 Icon(
-                    Icons.Filled.Add,
+                    Icons.Filled.Settings,
                     tint = Color.White,
                     contentDescription = null
                 )

@@ -9,26 +9,21 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.PriceCheck
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Swipe
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
+import com.example.gunluk_demir_fiyati_by_command.presentation.main.MainViewModel
 import com.example.gunluk_demir_fiyati_by_command.presentation.navigation.BottomNavItem
-import com.example.gunluk_demir_fiyati_by_command.ui.theme.background
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

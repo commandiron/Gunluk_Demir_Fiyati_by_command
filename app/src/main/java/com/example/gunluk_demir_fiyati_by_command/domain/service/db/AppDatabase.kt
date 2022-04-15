@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.gunluk_demir_fiyati_by_command.domain.model.CityCheck
 import com.example.gunluk_demir_fiyati_by_command.domain.model.DemirFiyat
 
-@Database(entities = arrayOf(CityCheck::class), version = 30)
+@Database(entities = arrayOf(CityCheck::class), version = 31)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun appDao(): AppDao
 }

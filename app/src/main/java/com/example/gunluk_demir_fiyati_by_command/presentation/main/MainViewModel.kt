@@ -1,4 +1,4 @@
-package com.example.gunluk_demir_fiyati_by_command.presentation
+package com.example.gunluk_demir_fiyati_by_command.presentation.main
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -85,6 +85,13 @@ class MainViewModel@Inject constructor(
                                 if(checkedFiyat != null){
                                     maskedDemirFiyatList.value = maskedDemirFiyatList.value + checkedFiyat
                                 }
+                            }
+                        }
+                        //Bu kısım kullanıcı hiçbir şehir seçimi yapmadığında istanbul'un gözükmesi için yapıldı.
+                        // Kullanıcının bölgesini alıp ona göre gösterilebilir.
+                        if(maskedDemirFiyatList.value.isEmpty()){
+                            if(demirFiyatList.value.isNotEmpty()){
+                                maskedDemirFiyatList.value = listOf<DemirFiyat>() + demirFiyatList.value[1]
                             }
                         }
                     }
